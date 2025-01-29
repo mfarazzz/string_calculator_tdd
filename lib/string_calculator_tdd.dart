@@ -8,8 +8,12 @@ int add(String numbers) {
     numbers = parts[1];
   }
 
-  return numbers
-      .split(RegExp(delimiter))
-      .map(int.parse)
-      .reduce((a, b) => a + b);
+  List<int> nums = numbers.split(RegExp(delimiter)).map(int.parse).toList();
+  List<int> negatives = nums.where((n) => n < 0).toList();
+
+  if (negatives.isNotEmpty) {
+    throw Exception("Negative numbers not allowed: ${negatives.join(', ')}");
+  }
+
+  return nums.reduce((a, b) => a + b);
 }
